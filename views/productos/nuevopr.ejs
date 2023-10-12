@@ -1,0 +1,25 @@
+<%- include("../templates/encabezado") %> 
+<%- include("../templates/menu") %>
+
+<div class="container mt-5">
+  <form action="/productos/productos/nuevoproducto" method="post" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-header">
+            <h1>Nuevo producto</h1>
+        </div>
+        <div class="card-body">
+            <input class="form-control mb-3" type="text" name="nombre" id="nombre" placeholder="Nombre" autofocus>
+            <input class="form-control mb-3" type="text" name="precio" id="precio" placeholder="Precio" >
+            <input class="form-control mb-3" type="number" name="stock" id="stock" placeholder="Stock" >
+            <input class="form-control mb-3" type="file" name="foto" id="foto" placeholder="Foto" >
+        </div>
+        <div class="card-footer">
+            <button class="form-control btn btn-primary" type="submit">Guardar producto</button>
+        </div>
+    </div>
+  </form>
+</div>
+
+<%- include("../templates/pie") %>
+
+
