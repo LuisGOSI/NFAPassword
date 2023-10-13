@@ -10,6 +10,7 @@
         <div class="card-body">
             <input type="hidden" name="id" id="id" value="<%= user.id %>">
             <input type="hidden" name="passwordViejo" id="passwordViejo" value="<%= user.password %>">
+            <input type="hidden" name="saltViejo" id="saltViejo" value="<%= user.salt %>">
             <input type="hidden" name="fotoVieja" id="fotoVieja" value="<%= user.foto %>">
             <input class="form-control mb-3" type="text" value="<%= user.nombre %>" name="nombre" id="nombre" placeholder="Nombre" autofocus>
             <input class="form-control mb-3" type="text" value="<%= user.usuario %>" name="usuario" id="usuario" placeholder="Usuario" >

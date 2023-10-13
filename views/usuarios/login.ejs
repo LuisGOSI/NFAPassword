@@ -1,0 +1,28 @@
+<%-  include("../templates/encabezado") %>
+
+<div class="container mt-5">
+  <form action="/login" method="POST">
+    <div class="card">
+      <div class="card-header">
+        <h1>Iniciar sesion</h1>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="usuario">Nombre de usuario:</label>
+          <input class="form-control" type="text" id="usuario" name="usuario">
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input class="form-control" type="password" id="password" name="password">
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="form-control btn btn-primary" type="submit" value="Iniciar sesion">Iniciar sesion</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<%- include("../templates/pie") %>
+
+</rewritten_selection_following_instructions>

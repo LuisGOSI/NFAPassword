@@ -6,11 +6,13 @@ var {
   buscarPorID,
   modificarUsuario,
   borrarUsuario,
+  buscarPorUsuario,
+  verificarPassword,
 } = require("../database/usuariosbd");
 var subirArchivo=require("../middlewares/subirArchivos")
 
 
-ruta.get("/", async (req, res) => {
+ruta.get("/usuarios", async (req, res) => {
   var usuarios = await mostrarUsuarios();
   // console.log(usuarios);
   res.render("usuarios/mostrar", { usuarios });
@@ -29,15 +31,9 @@ ruta.post("/nuevousuario", subirArchivo(), async (req, res) => {
 
 ruta.get("/editar/:id", async (req, res) => {
   var user = await buscarPorID(req.params.id);
-  console.log(user);
+  // console.log(user);
   res.render("usuarios/modificar", { user });
 });
-
-// ruta.post("/editar", subirArchivo(), async (req, res) => {
-//   req.body.foto = req.file.originalname;
-//   var error = await modificarUsuario(req.body);
-//   res.redirect("/");
-// });
 
 ruta.post("/editar", subirArchivo(), async (req, res) => {
   try {
@@ -48,6 +44,8 @@ ruta.post("/editar", subirArchivo(), async (req, res) => {
               const rutaFotoAnterior = `web/images/${usuarioAct.foto}`;
               fs.unlinkSync(rutaFotoAnterior);
           }
+      } else {
+          req.body.foto = req.body.fotoVieja;   
       }
       await modificarUsuario(req.body);
       res.redirect("/");
@@ -67,4 +65,29 @@ ruta.get("/borrar/:id", async (req, res) => {
   res.redirect("/");
 });
 
+ruta.get("/", async (req, res) => {
+  res.render("usuarios/login");
+});
+
+ruta.post("/login", async (req, res) => {
+  var { usuario, password } = req.body;
+  var  usuarioEncontrado = await buscarPorUsuario(usuario);
+  if (usuarioEncontrado) {
+    var passwordCorrecto = await verificarPassword(password, usuarioEncontrado.password, usuarioEncontrado.salt);
+    if (passwordCorrecto) {
+      req.body.usuario = usuarioEncontrado;
+      res.redirect("/usuarios");
+    } else {
+      console.log("Usuario o contraseña incorrectos");
+      res.render("usuarios/login");
+    }
+  } else {
+    console.log("Usuario o contraseña incorrectos"); 
+    res.render("usuarios/login");
+  }
+});
+
+
 module.exports = ruta;
+
+
