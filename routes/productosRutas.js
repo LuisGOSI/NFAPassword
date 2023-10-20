@@ -6,6 +6,7 @@ var {
   modificarProducto,
   buscarPorIDPr,
 } = require("../database/productosbd");
+const { admin } = require("../middlewares/funcionesPassword");
 var subirArchivo = require("../middlewares/subirArchivos");
 var fs=require("fs")
 
@@ -14,7 +15,7 @@ rutapr.get("/productos/mostrarproductos", async (req, res) => {
   res.render("productos/mostrarpr", { productos });
 });
 
-rutapr.get("/productos/nuevoproducto", (req, res) => {
+rutapr.get("/productos/nuevoproducto", admin, (req, res) => {
   res.render("productos/nuevopr");
 });
 

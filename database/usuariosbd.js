@@ -37,6 +37,7 @@ async function nuevoUsuario(datos) {
   var {hash, salt}=encriptarPassword(datos.password);
   datos.password=hash;
   datos.salt=salt;
+  datos.admin=false;
   var user = new Usuario(null, datos);
   var error = 1;
   if (user.bandera == 0) {
@@ -102,6 +103,7 @@ async function buscarPorUsuario(usuario) {
   try {
     var usuarios = await conexion.where("usuario", "==", usuario).get();
     usuarios.forEach((usuario) => {
+      // console.log(usuario.data());
       var usuarioObjeto = new Usuario(usuario.id, usuario.data());
       if (usuarioObjeto.bandera == 0) {
         user = usuarioObjeto.obtenerDatos;

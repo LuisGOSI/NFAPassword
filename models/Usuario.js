@@ -8,6 +8,7 @@ class Usuario {
     this.password = data.password;
     this.salt = data.salt;
     this.foto = data.foto;
+    this.admin = data.admin;
   }
 
   set id(id) {
@@ -31,6 +32,9 @@ class Usuario {
   set salt(salt){
     salt.length > 0 ? (this._salt = salt) : (this.bandera=1);
   }
+  set admin(admin){
+    this._admin=admin;
+  }
   get id() {
     return this._id;
   }
@@ -49,6 +53,9 @@ class Usuario {
   get salt(){
     return this._salt;
   }
+  get admin(){
+    return this._admin
+  }
   get obtenerDatos() {
     if (this._id != null) {
       return {
@@ -58,6 +65,7 @@ class Usuario {
         password: this.password,
         salt: this.salt,
         foto: this.foto,
+        admin: this.admin
       };
     } else {
       return {
@@ -66,6 +74,7 @@ class Usuario {
         password: this.password,
         salt: this.salt,
         foto: this.foto,
+        admin: this.admin,
       };
     }
   }
