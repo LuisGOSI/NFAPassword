@@ -12,7 +12,7 @@ var {
 var subirArchivo = require("../middlewares/subirArchivos");
 var { autorizado , admin } = require("../middlewares/funcionesPassword");
 
-ruta.get("/usuarios", autorizado, async (req, res) => {
+ruta.get("/usuarios", async (req, res) => {
     var usuarios = await mostrarUsuarios();
     res.render("usuarios/mostrar", { usuarios });
 });
