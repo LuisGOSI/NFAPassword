@@ -63,7 +63,7 @@ ruta.get("/borrar/:id", async (req, res) => {
 });
 
 ruta.get("/", (req, res) => {
-  res.render("usuarios/login");
+  res.redirect("/usuarios");
 });
 
 ruta.post("/login", async (req, res) => {

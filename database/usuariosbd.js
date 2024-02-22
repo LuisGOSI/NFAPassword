@@ -56,6 +56,7 @@ async function modificarUsuario(datos) {
   var error = 1;
   var respuestaBuscar = await buscarPorID(datos.id);
   if (respuestaBuscar != "") {
+    datos.admin=respuestaBuscar.admin;
     if(datos.password == ""){
       datos.password=datos.passwordViejo;
       datos.salt=datos.saltViejo;

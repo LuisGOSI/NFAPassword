@@ -1,5 +1,5 @@
 var ruta = require("express").Router();
-var subirArchivo=require("../middlewares/subirArchivos");
+var subirArchivo = require("../middlewares/subirArchivos");
 var {
   mostrarUsuarios,
   nuevoUsuario,
@@ -7,7 +7,7 @@ var {
   modificarUsuario,
   borrarUsuario,
 } = require("../database/usuariosbd");
-var fs=require("fs");
+var fs = require("fs");
 
 
 ruta.get("/api/mostrarUsuarios", async (req, res) => {
@@ -20,7 +20,7 @@ ruta.get("/api/mostrarUsuarios", async (req, res) => {
 });
 
 ruta.post("/api/nuevousuario", subirArchivo(), async (req, res) => {
-  req.body.foto=req.file.originalname;
+  req.body.foto = req.file.originalname;
   // console.log(req.body);
   var error = await nuevoUsuario(req.body);
   if ((error == 0)) {
@@ -40,16 +40,20 @@ ruta.get("/api/buscarUsuarioPorId/:id", async (req, res) => {
   // res.render("usuarios/modificar", { user });
 });
 
-ruta.post("/api/editarUsuario", subirArchivo(),async (req, res) => {
+ruta.post("/api/editarUsuario", subirArchivo(), async (req, res) => {
   try {
     const usuarioAct = await buscarPorID(req.body.id);
     if (req.file) {
-        req.body.foto = req.file.originalname;
-        if (usuarioAct.foto) {
-            const rutaFotoAnterior = `web/images/${usuarioAct.foto}`;
-            fs.unlinkSync(rutaFotoAnterior);
-        }
-    }
+      console.log("Existe el archivo");
+      req.body.foto = req.file.originalname;
+      if (usuarioAct.foto) {
+        const rutaFotoAnterior = `web/images/${usuarioAct.foto}`;
+        fs.unlinkSync(rutaFotoAnterior);
+      }
+      else {
+        req.body.foto = req.body.fotoVieja;
+      }
+    } 
     var error = await modificarUsuario(req.body);
     if (error == 0) {
       res.status(200).json("Usuario modificado");
@@ -57,8 +61,8 @@ ruta.post("/api/editarUsuario", subirArchivo(),async (req, res) => {
       res.status(400).json("Error al  modificar el usuario");
     }
   } catch (error) {
-      console.error("Error al editar pr:", error);
-      res.status(500).send("Error interno del servidor");
+    console.error("Error al editar pr:", error);
+    res.status(500).send("Error interno del servidor");
   }
 });
 
