@@ -21,7 +21,7 @@ ruta.get("/api/mostrarUsuarios", async (req, res) => {
 
 ruta.post("/api/nuevousuario", subirArchivo(), async (req, res) => {
   req.body.foto = req.file.originalname;
-  // console.log(req.body);
+  console.log(req.body);
   var error = await nuevoUsuario(req.body);
   if ((error == 0)) {
     res.status(200).json("Usuario registrado");
@@ -42,6 +42,7 @@ ruta.get("/api/buscarUsuarioPorId/:id", async (req, res) => {
 
 ruta.post("/api/editarUsuario", subirArchivo(), async (req, res) => {
   try {
+    console.log(req.body);
     const usuarioAct = await buscarPorID(req.body.id);
     if (req.file) {
       console.log("Existe el archivo");
